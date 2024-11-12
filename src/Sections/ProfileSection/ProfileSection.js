@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import the useNavigate hook for navigation
 import "./ProfileSection.css";
+
 function ProfileSection() {
-  // Initialize form data state
+  const navigate = useNavigate(); // Set up navigation
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -9,7 +12,6 @@ function ProfileSection() {
     address: "",
   });
 
-  // Handle input change
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -17,12 +19,16 @@ function ProfileSection() {
     });
   };
 
-  // Handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Save data to localStorage
     localStorage.setItem("profileData", JSON.stringify(formData));
     alert("Profile saved to localStorage!");
+  };
+
+  const handleNext = (e) => {
+    e.preventDefault();
+    // After filling the profile, navigate to the next page (education details page)
+    navigate("./education");
   };
 
   return (
@@ -56,6 +62,9 @@ function ProfileSection() {
         onChange={handleChange}
       />
       <button type="submit">Save Profile</button>
+      <button type="button" onClick={handleNext}>
+        Next
+      </button>
     </form>
   );
 }
