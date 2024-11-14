@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import for navigation
+import { useNavigate } from "react-router-dom";
+import { db } from "../../Firebase/firebase";
+import { collection, addDoc } from "firebase/firestore";
 import "./EducationPage.css";
 
 function EducationPage() {
@@ -19,17 +21,17 @@ function EducationPage() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Save the education data to localStorage or any further action
-    localStorage.setItem("educationData", JSON.stringify(educationData));
-    alert("Education details saved!");
-  };
-
-  const handleNext = (e) => {
-    e.preventDefault();
-    // Navigate to the next page (or do something else after the form submission)
-    alert("Proceeding to next step...");
+    try {
+      // Save to Firestore
+      await addDoc(collection(db, "educationData"), educationData);
+      alert("Education details saved to Firebase!");
+      navigate("/skills"); // Navigate to the Skills page after saving
+    } catch (error) {
+      console.error("Error saving education details: ", error);
+      alert("Failed to save education details to Firebase.");
+    }
   };
 
   return (
@@ -63,7 +65,7 @@ function EducationPage() {
         onChange={handleChange}
       />
       <button type="submit">Save Education</button>
-      <button type="button" onClick={handleNext}>
+      <button type="button" onClick={() => navigate("/skills")}>
         Next
       </button>
     </form>
