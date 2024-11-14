@@ -4,6 +4,7 @@ import ProfileSection from "./Sections/ProfileSection/ProfileSection";
 import EducationPage from "./Sections/Education/education";
 import SkillsPage from "./Sections/Skills/SkillsPage"; // Corrected import for SkillsPage.js
 import ProjectDetails from "./Sections/ProjectDetails/ProjectDetails"; // Import ProjectDetails
+import SocialLinks from "./Sections/SocialLinks/SocialLinks"; // Import SocialLinks
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
           <Route path="/education" element={<EducationPage />} />
           <Route path="/skills" element={<SkillsPage />} />{" "}
           <Route path="/project-details" element={<ProjectDetails />} />{" "}
+          <Route path="/social-links" element={<SocialLinks />} />{" "}
+          {/* Route for SocialLinks */}
           {/* Route for ProjectDetails */}
           {/* Route for SkillsPage */}
         </Routes>
