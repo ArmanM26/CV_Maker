@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import the useNavigate hook for navigation
+import { useNavigate } from "react-router-dom";
+import { db } from "../../Firebase/firebase";
+import { collection, addDoc } from "firebase/firestore"; // Import Firestore functions
 import "./ProfileSection.css";
 
 function ProfileSection() {
-  const navigate = useNavigate(); // Set up navigation
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -19,16 +21,21 @@ function ProfileSection() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    localStorage.setItem("profileData", JSON.stringify(formData));
-    alert("Profile saved to localStorage!");
+    try {
+      // Save profile data to Firestore
+      const docRef = await addDoc(collection(db, "profiles"), formData);
+      alert("Profile saved to Firebase with ID: " + docRef.id);
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      alert("Failed to save profile to Firebase.");
+    }
   };
 
   const handleNext = (e) => {
     e.preventDefault();
-    // After filling the profile, navigate to the next page (education details page)
-    navigate("./education");
+    navigate("/education");
   };
 
   return (
