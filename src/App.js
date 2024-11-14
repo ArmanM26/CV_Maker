@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProfileSection from "./Sections/ProfileSection/ProfileSection";
 import EducationPage from "./Sections/Education/education";
 import SkillsPage from "./Sections/Skills/SkillsPage"; // Corrected import for SkillsPage.js
+import ProjectDetails from "./Sections/ProjectDetails/ProjectDetails"; // Import ProjectDetails
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
           <Route path="/" element={<ProfileSection />} />
           <Route path="/education" element={<EducationPage />} />
           <Route path="/skills" element={<SkillsPage />} />{" "}
+          <Route path="/project-details" element={<ProjectDetails />} />{" "}
+          {/* Route for ProjectDetails */}
           {/* Route for SkillsPage */}
         </Routes>
       </Router>

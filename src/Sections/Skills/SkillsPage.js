@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { db } from "../../Firebase/firebase";
 import { collection, addDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import "./SkillsPage.css";
 
 function SkillsPage() {
@@ -8,6 +9,8 @@ function SkillsPage() {
     skillName: "",
     proficiencyLevel: "",
   });
+
+  const navigate = useNavigate(); // Initialize navigate
 
   const handleChange = (e) => {
     setSkillsData({
@@ -28,6 +31,10 @@ function SkillsPage() {
     }
   };
 
+  const handleNext = () => {
+    navigate("/project-details"); // Navigate to the ProjectDetails page
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <input
@@ -38,8 +45,12 @@ function SkillsPage() {
         onChange={handleChange}
       />
       <button type="submit">Save Skills</button>
+      <button type="button" onClick={handleNext}>
+        Next
+      </button>{" "}
+      {/* Next Button */}
     </form>
   );
 }
 
-export default SkillsPage; // Ensure the correct export
+export default SkillsPage;
