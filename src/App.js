@@ -7,6 +7,8 @@ import ProjectDetails from "./Sections/ProjectDetails/ProjectDetails"; // Import
 import SocialLinks from "./Sections/SocialLinks/SocialLinks"; // Import SocialLinks
 import ResumePage from "./Sections/ResumePage/ResumePage";
 import Progress from "./Sections/Progress/Progress";
+import Login from "./Auth/Login/Login";
+import Register from "./Auth/Register/Register";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Progress />
 
         <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/" element={<ProfileSection />} />
           <Route path="/education" element={<EducationPage />} />
           <Route path="/skills" element={<SkillsPage />} />{" "}

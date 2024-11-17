@@ -4,49 +4,62 @@ import { collection, getDocs } from "firebase/firestore";
 import "./ResumePage.css";
 
 function ResumePage() {
-  const [profile, setProfile] = useState([]);
-  const [skills, setSkills] = useState([]);
-  const [projects, setProjects] = useState([]);
-  const [socialLinks, setSocialLinks] = useState([]);
-  const [education, setEducation] = useState([]);
+  const [resumeData, setResumeData] = useState({
+    profile: null,
+    skills: [],
+    projects: [],
+    socialLinks: [],
+    education: [],
+  });
 
-  // Fetch data from Firestore
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const profileSnapshot = await getDocs(collection(db, "profiles"));
-        const skillsSnapshot = await getDocs(collection(db, "skillsData"));
-        const projectsSnapshot = await getDocs(collection(db, "projectsData"));
-        const socialLinksSnapshot = await getDocs(
-          collection(db, "socialLinksData")
-        );
-        const educationSnapshot = await getDocs(
-          collection(db, "educationData")
-        );
+        const [
+          profileSnap,
+          skillsSnap,
+          projectsSnap,
+          socialLinksSnap,
+          educationSnap,
+        ] = await Promise.all([
+          getDocs(collection(db, "profiles")),
+          getDocs(collection(db, "skillsData")),
+          getDocs(collection(db, "projectsData")),
+          getDocs(collection(db, "socialLinksData")),
+          getDocs(collection(db, "educationData")),
+        ]);
 
-        const profileData = profileSnapshot.docs.map((doc) => doc.data());
-        const skillsData = skillsSnapshot.docs.map((doc) => doc.data());
-        const projectsData = projectsSnapshot.docs.map((doc) => doc.data());
-        const socialLinksData = socialLinksSnapshot.docs.map((doc) =>
-          doc.data()
-        );
-        const educationData = educationSnapshot.docs.map((doc) => doc.data());
-
-        setProfile(profileData);
-        setSkills(skillsData);
-        setProjects(projectsData);
-        setSocialLinks(socialLinksData);
-        setEducation(educationData);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
+        setResumeData({
+          profile:
+            profileSnap.docs.length > 0 ? profileSnap.docs[0].data() : null,
+          skills: skillsSnap.docs.map((doc) => doc.data()),
+          projects: projectsSnap.docs.map((doc) => doc.data()),
+          socialLinks: socialLinksSnap.docs.map((doc) => doc.data()),
+          education: educationSnap.docs.map((doc) => doc.data()),
+        });
+      } catch (err) {
+        console.error("Error fetching resume data:", err);
+        setError("Failed to load resume data. Please try again later.");
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
-  // Extract profile data (Assumes there's only one document in "profiles" collection)
-  const userProfile = profile.length > 0 ? profile[0] : null;
+  const { profile, skills, projects, socialLinks, education } = resumeData;
+
+  if (loading) {
+    return <div className="loading">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
 
   return (
     <div className="resume-container">
@@ -55,20 +68,22 @@ function ResumePage() {
       {/* Profile Section */}
       <div className="section">
         <h2>Profile</h2>
-        {userProfile ? (
+        {profile ? (
           <div className="profile">
-            <img
-              src={userProfile.image}
-              alt="Profile"
-              className="profile-image"
-            />
+            {profile.image && (
+              <img
+                src={profile.image}
+                alt="Profile"
+                className="profile-image"
+              />
+            )}
             <p>
               <strong>
-                {userProfile.firstName} {userProfile.lastName}
+                {profile.firstName} {profile.lastName}
               </strong>
             </p>
-            <p>{userProfile.phoneNumber}</p>
-            <p>{userProfile.address}</p>
+            <p>{profile.phoneNumber}</p>
+            <p>{profile.address}</p>
           </div>
         ) : (
           <p>No profile data available.</p>
@@ -83,7 +98,8 @@ function ResumePage() {
             {education.map((edu, index) => (
               <li key={index}>
                 <strong>{edu.courseName}</strong> - {edu.collegeName} (
-                {edu.completionYear})<br />
+                {edu.completionYear})
+                <br />
                 <em>{edu.percentage}</em>
               </li>
             ))}
@@ -134,7 +150,9 @@ function ResumePage() {
           <ul>
             {socialLinks.map((link, index) => (
               <li key={index}>
-                <a href={link} target="_blank" rel="noopener noreferrer"></a>
+                <a href={link.url} target="_blank" rel="noopener noreferrer">
+                  {link.platform}
+                </a>
               </li>
             ))}
           </ul>

@@ -1,8 +1,8 @@
 // Import the necessary functions from the Firebase SDKs
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore"; // Firestore database
-// import { getAuth } from "firebase/auth"; // Authentication
+import { getAuth } from "firebase/auth"; // Authentication
 import { getStorage } from "firebase/storage"; // Storage (for file uploads)
 
 // Your Firebase configuration
@@ -16,14 +16,13 @@ const firebaseConfig = {
   measurementId: "G-EZ8QD16ZVV",
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase (only if not initialized yet)
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const analytics = getAnalytics(app); // Optional, only if you need Analytics
 
 // Initialize Firebase services
 const db = getFirestore(app); // Firestore for database
-// const auth = getAuth(app); // Authentication
 const storage = getStorage(app); // Storage for file uploads
-
+export const auth = getAuth(app); // Authentication
 // Export Firebase services to use in other files
 export { app, analytics, db, storage };
