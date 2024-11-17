@@ -7,7 +7,7 @@ const Progress = () => {
 
   // Define all steps
   const steps = [
-    { path: "/", label: "Profile Section" },
+    { path: "/profile", label: "Profile Section" },
     { path: "/education", label: "Education Section" },
     { path: "/skills", label: "Skills Sector" },
     { path: "/project-details", label: "Mini Project" },

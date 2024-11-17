@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { auth } from "../../Firebase/firebase"; // Import auth from firebase.js
-import { createUserWithEmailAndPassword } from "firebase/auth"; // Firebase method to create a user
+import { auth } from "../../Firebase/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 function Register() {
@@ -19,10 +19,10 @@ function Register() {
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password); // Register user
-      navigate("/resume"); // Redirect to resume page after successful registration
+      await createUserWithEmailAndPassword(auth, email, password); // Регистрация пользователя
+      navigate("/"); // Перенаправление на страницу логина после регистрации
     } catch (error) {
-      setError(error.message); // Display error message
+      setError(error.message); // Отображение ошибки
     }
   };
 
@@ -54,6 +54,10 @@ function Register() {
         <button type="submit">Register</button>
       </form>
       {error && <p>{error}</p>}
+      <p>
+        Already have an account?{" "}
+        <button onClick={() => navigate("/")}>Login here</button>
+      </p>
     </div>
   );
 }

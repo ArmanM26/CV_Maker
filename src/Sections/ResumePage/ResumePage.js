@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { db } from "../../Firebase/firebase";
-import { collection, getDocs } from "firebase/firestore";
-import "./ResumePage.css";
+import { db } from "../../Firebase/firebase"; // Import the Firebase Firestore instance
+import { collection, getDocs } from "firebase/firestore"; // Firestore functions
+import { useNavigate } from "react-router-dom"; // If you want to navigate for editing profile
+import "./ResumePage.css"; // Import your CSS file for styling
 
 function ResumePage() {
   const [resumeData, setResumeData] = useState({
@@ -14,6 +15,7 @@ function ResumePage() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,6 +66,7 @@ function ResumePage() {
   return (
     <div className="resume-container">
       <h1>My Resume</h1>
+      <button onClick={() => navigate("/profile")}>Edit Profile</button>
 
       {/* Profile Section */}
       <div className="section">

@@ -13,7 +13,7 @@ function Login() {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/resume");
+      navigate("/profile"); // Перенаправление на страницу резюме
     } catch (error) {
       setError(error.message);
     }
@@ -38,6 +38,10 @@ function Login() {
         <button type="submit">Login</button>
       </form>
       {error && <p>{error}</p>}
+      <p>
+        Don't have an account?{" "}
+        <button onClick={() => navigate("/register")}>Register here</button>
+      </p>
     </div>
   );
 }

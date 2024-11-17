@@ -37,7 +37,7 @@ function SocialLinks() {
     <form onSubmit={handleSubmit}>
       <input
         type="url"
-        name="Link"
+        name="link"
         placeholder="URL"
         value={socialData.link}
         onChange={handleChange}
