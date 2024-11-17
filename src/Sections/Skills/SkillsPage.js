@@ -5,26 +5,35 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate for naviga
 import "./SkillsPage.css";
 
 function SkillsPage() {
-  const [skillsData, setSkillsData] = useState({
-    skillName: "",
-    proficiencyLevel: "",
-  });
+  const [skillsList, setSkillsList] = useState([{ skillName: "" }]); // Initial list with one input field for the skill
 
   const navigate = useNavigate(); // Initialize navigate
 
-  const handleChange = (e) => {
-    setSkillsData({
-      ...skillsData,
-      [e.target.name]: e.target.value,
-    });
+  const handleChange = (e, index) => {
+    const updatedSkillsList = [...skillsList];
+    updatedSkillsList[index][e.target.name] = e.target.value;
+    setSkillsList(updatedSkillsList);
+  };
+
+  const handleAddSkill = () => {
+    setSkillsList([
+      ...skillsList,
+      { skillName: "" }, // Add a new empty object for the new skill
+    ]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Save to Firestore
-      await addDoc(collection(db, "skillsData"), skillsData);
+      // Save each skill to Firestore
+      for (const skill of skillsList) {
+        if (skill.skillName) {
+          // Check if skillName is not empty
+          await addDoc(collection(db, "skillsData"), skill);
+        }
+      }
       alert("Skills data saved to Firebase!");
+      setSkillsList([{ skillName: "" }]); // Clear the list after submission, keeping one input field
     } catch (error) {
       console.error("Error saving skills data: ", error);
       alert("Failed to save skills data to Firebase.");
@@ -37,18 +46,25 @@ function SkillsPage() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="skillName"
-        placeholder="Skill Name"
-        value={skillsData.skillName}
-        onChange={handleChange}
-      />
+      {skillsList.map((skill, index) => (
+        <div key={index}>
+          <input
+            type="text"
+            name="skillName"
+            placeholder="Skill Name"
+            value={skill.skillName}
+            onChange={(e) => handleChange(e, index)}
+          />
+        </div>
+      ))}
+      <button type="button" onClick={handleAddSkill}>
+        Add Skill
+      </button>{" "}
+      {/* Button to add a new skill */}
       <button type="submit">Save Skills</button>
       <button type="button" onClick={handleNext}>
         Next
-      </button>{" "}
-      {/* Next Button */}
+      </button>
     </form>
   );
 }
