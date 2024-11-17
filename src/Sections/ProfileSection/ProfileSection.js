@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { db } from "../../Firebase/firebase";
+import { db, storage } from "../../Firebase/firebase";
 import { collection, addDoc } from "firebase/firestore"; // Import Firestore functions
 import "./ProfileSection.css";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Import Firebase Storage functions
 
 function ProfileSection() {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ function ProfileSection() {
     lastName: "",
     phoneNumber: "",
     address: "",
+    image: null,
   });
 
   const handleChange = (e) => {
@@ -20,19 +22,36 @@ function ProfileSection() {
       [e.target.name]: e.target.value,
     });
   };
-
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({
+        ...formData,
+        image: file,
+      });
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    let imageUrl = "";
+    if (formData.image) {
+      const imageRef = ref(storage, `profile-images/${formData.image.name}`);
+      await uploadBytes(imageRef, formData.image);
+      imageUrl = await getDownloadURL(imageRef);
+    }
+
     try {
-      // Save profile data to Firestore
-      const docRef = await addDoc(collection(db, "profiles"), formData);
+      const docRef = await addDoc(collection(db, "profiles"), {
+        ...formData,
+        image: imageUrl, // Save image URL to Firestore
+      });
       alert("Profile saved to Firebase with ID: " + docRef.id);
     } catch (error) {
       console.error("Error adding document: ", error);
       alert("Failed to save profile to Firebase.");
     }
   };
-
   const handleNext = (e) => {
     e.preventDefault();
     navigate("/education");
@@ -67,6 +86,12 @@ function ProfileSection() {
         placeholder="Address"
         value={formData.address}
         onChange={handleChange}
+      />
+      <input
+        type="file"
+        name="image"
+        accept="image/*"
+        onChange={handleImageChange}
       />
       <button type="submit">Save Profile</button>
       <button type="button" onClick={handleNext}>
