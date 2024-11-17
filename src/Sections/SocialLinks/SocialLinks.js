@@ -30,7 +30,7 @@ function SocialLinks() {
   };
 
   const handleNext = () => {
-    navigate("/ResumePage");
+    navigate("/resume");
   };
 
   return (

@@ -1,0 +1,111 @@
+/* ResumePage.css */
+
+.resume-container {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .section {
+    margin-bottom: 20px;
+  }
+  
+  .section h2 {
+    border-bottom: 2px solid #4a90e2;
+    display: inline-block;
+    padding-bottom: 5px;
+    color: #4a90e2;
+  }
+  
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+  }
+  
+  .profile-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+  }
+  
+  .profile p {
+    margin: 5px 0;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 10px;
+  }
+  
+  li strong {
+    color: #333;
+  }
+  
+  li em {
+    font-size: 0.9em;
+    color: #777;
+  }
+  
+  .skills ul,
+  .projects ul,
+  .education ul,
+  .social-links ul {
+    padding-left: 15px;
+  }
+  
+  .skills li,
+  .projects li,
+  .education li,
+  .social-links li {
+    border-left: 3px solid #4a90e2;
+    padding-left: 10px;
+    margin-bottom: 8px;
+  }
+  
+  a {
+    text-decoration: none;
+    color: #4a90e2;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  .resume-container .social-links a {
+    display: block;
+    margin-top: 5px;
+  }
+  
+  @media (max-width: 768px) {
+    .resume-container {
+      padding: 15px;
+    }
+  
+    .profile {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .profile-image {
+      margin-bottom: 10px;
+    }
+  }
+  

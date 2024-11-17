@@ -1,4 +1,5 @@
-/* General Styles */
+
+/* Global styling */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -11,105 +12,90 @@ h1 {
   background-color: #ff0066;
   color: white;
   text-align: center;
-  padding: 15px;
-  font-size: 24px;
+  padding: 20px;
+  font-size: 26px;
   margin: 0;
 }
 
-/* Step Navigation */
+/* Step navigation */
 .step-navigation {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 0;
+  margin: 20px 0;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
 }
 
 .step-navigation div {
   font-size: 14px;
-  color: #666;
-  margin: 0 10px;
-  position: relative;
+  color: #333;
+  margin: 0 15px;
   cursor: pointer;
+  position: relative;
 }
 
-.step-navigation div.active {
+.step-navigation .active {
   color: #ff0066;
   font-weight: bold;
 }
 
-.step-navigation div.active::after {
+.step-navigation .active::after {
   content: "";
   position: absolute;
-  bottom: -5px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  height: 2px;
+  bottom: -10px;
+  left: 0;
+  right: 0;
+  height: 3px;
   background-color: #ff0066;
+  border-radius: 10px;
 }
 
-/* Form Container */
+/* Form container */
 form {
   background-color: white;
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Input Fields */
-form input[type="text"],
-form input[type="file"] {
-  width: calc(50% - 10px);
-  padding: 10px;
-  margin: 10px 5px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  margin: 15px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   font-size: 14px;
-  box-sizing: border-box;
 }
 
-form input[type="file"] {
-  margin: 20px 5px;
-}
-
-/* Button Styles */
 button[type="submit"],
 button[type="button"] {
-  padding: 10px 20px;
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
   border: none;
-  border-radius: 5px;
-  color: white;
+  border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
-  margin: 10px 5px;
+  transition: background-color 0.3s ease;
 }
 
 button[type="submit"] {
   background-color: #0066ff;
+  color: white;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056d4;
 }
 
 button[type="button"] {
   background-color: #ff0066;
-}
-
-button[type="submit"]:hover {
-  background-color: #004dcc;
+  color: white;
 }
 
 button[type="button"]:hover {
   background-color: #e0005a;
-}
-
-/* Additional Responsiveness */
-@media screen and (max-width: 768px) {
-  form input[type="text"],
-  form input[type="file"] {
-    width: 100%;
-  }
-
-  form {
-    padding: 15px;
-  }
 }
