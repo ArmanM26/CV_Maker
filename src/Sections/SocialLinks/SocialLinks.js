@@ -1,27 +1,34 @@
 import React, { useState } from "react";
 import { db } from "../../Firebase/firebase";
 import { collection, addDoc } from "firebase/firestore";
-import "./SocialLinks.css"; // Optional: You can add some custom styling
 import { useNavigate } from "react-router-dom";
+import "./SocialLinks.css";
 
 function SocialLinks() {
-  const [socialData, setSocialData] = useState({
-    link: "",
-  });
+  const [socialLinks, setSocialLinks] = useState([{ link: "" }]); // Start with one empty link
 
-  const handleChange = (e) => {
-    setSocialData({
-      ...socialData,
-      [e.target.name]: e.target.value,
-    });
+  const handleChange = (e, index) => {
+    const updatedLinks = [...socialLinks];
+    updatedLinks[index].link = e.target.value;
+    setSocialLinks(updatedLinks);
   };
-  const navigate = useNavigate(); // Initialize navigate
+
+  const handleAddLink = () => {
+    setSocialLinks([...socialLinks, { link: "" }]); // Add a new empty link input
+  };
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Save to Firestore
-      await addDoc(collection(db, "socialLinksData"), socialData);
+      // Save all social media links to Firestore
+      for (const link of socialLinks) {
+        if (link.link) {
+          // Make sure the link is not empty
+          await addDoc(collection(db, "socialLinksData"), { link: link.link });
+        }
+      }
       alert("Social media links saved to Firebase!");
     } catch (error) {
       console.error("Error saving social media links: ", error);
@@ -35,13 +42,20 @@ function SocialLinks() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="url"
-        name="link"
-        placeholder="URL"
-        value={socialData.link}
-        onChange={handleChange}
-      />
+      {socialLinks.map((socialLink, index) => (
+        <div key={index}>
+          <input
+            type="url"
+            name="link"
+            placeholder="URL"
+            value={socialLink.link}
+            onChange={(e) => handleChange(e, index)} // Pass index for each link
+          />
+        </div>
+      ))}
+      <button type="button" onClick={handleAddLink}>
+        Add Another Link
+      </button>
       <button type="submit">Save Social Links</button>
       <button type="button" onClick={handleNext}>
         Next
