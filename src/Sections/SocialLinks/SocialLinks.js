@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { db } from "../../Firebase/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import "./SocialLinks.css"; // Optional: You can add some custom styling
+import { useNavigate } from "react-router-dom";
 
 function SocialLinks() {
   const [socialData, setSocialData] = useState({
@@ -14,6 +15,7 @@ function SocialLinks() {
       [e.target.name]: e.target.value,
     });
   };
+  const navigate = useNavigate(); // Initialize navigate
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,6 +29,10 @@ function SocialLinks() {
     }
   };
 
+  const handleNext = () => {
+    navigate("/ResumePage");
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <input
@@ -37,6 +43,9 @@ function SocialLinks() {
         onChange={handleChange}
       />
       <button type="submit">Save Social Links</button>
+      <button type="button" onClick={handleNext}>
+        Next
+      </button>
     </form>
   );
 }

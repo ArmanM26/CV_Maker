@@ -6,12 +6,16 @@ import SkillsPage from "./Sections/Skills/SkillsPage"; // Corrected import for S
 import ProjectDetails from "./Sections/ProjectDetails/ProjectDetails"; // Import ProjectDetails
 import SocialLinks from "./Sections/SocialLinks/SocialLinks"; // Import SocialLinks
 import ResumePage from "./Sections/ResumePage/ResumePage";
+import Progress from "./Sections/Progress/Progress";
+
 function App() {
   return (
     <div>
       {/* Single parent element */}
       <h1>RESUME GENERATOR</h1>
       <Router>
+        <Progress />
+
         <Routes>
           <Route path="/" element={<ProfileSection />} />
           <Route path="/education" element={<EducationPage />} />

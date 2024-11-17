@@ -1,0 +1,23 @@
+.progress {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    padding: 10px 0;
+    border-bottom: 2px solid #ddd;
+  }
+  
+  .step {
+    flex: 1;
+    text-align: center;
+    padding: 10px 5px;
+    color: gray;
+    font-size: 14px;
+    text-decoration: none;
+  }
+  
+  .step.active {
+    color: #ff007f; /* Highlight color for active section */
+    font-weight: bold;
+    border-bottom: 3px solid #ff007f;
+  }
+  
