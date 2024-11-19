@@ -49,12 +49,12 @@ form {
   
   /* Style for "Add Skill" button */
   button[type="button"] {
-    background-color: #28a745;
+    background-color: #0056b3;
   }
   
   /* Change "Add Skill" button color on hover */
   button[type="button"]:hover {
-    background-color: #218838;
+    background-color: #ff0066;
   }
   
   /* Space out buttons to be centered */

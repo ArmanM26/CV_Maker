@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { auth } from "../../Firebase/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import "../Auth.css";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -13,14 +14,14 @@ function Login() {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/profile"); // Перенаправление на страницу резюме
+      navigate("/profile");
     } catch (error) {
       setError(error.message);
     }
   };
 
   return (
-    <div>
+    <div className="auth-container">
       <h1>Login</h1>
       <form onSubmit={handleLogin}>
         <input
@@ -28,20 +29,24 @@ function Login() {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
         <button type="submit">Login</button>
       </form>
-      {error && <p>{error}</p>}
-      <p>
-        Don't have an account?{" "}
-        <button onClick={() => navigate("/register")}>Register here</button>
-      </p>
+      {error && <p className="error-message">{error}</p>}
+      <div className="switch-link">
+        <p>
+          Don't have an account?{" "}
+          <a onClick={() => navigate("/register")}>Register here</a>
+        </p>
+      </div>
     </div>
   );
 }

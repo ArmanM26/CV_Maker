@@ -14,6 +14,7 @@ import ResumePage from "./Sections/ResumePage/ResumePage";
 import Progress from "./Sections/Progress/Progress";
 import Login from "./Auth/Login/Login";
 import Register from "./Auth/Register/Register";
+import "./App.css";
 
 // Component to handle conditional rendering
 const ConditionalWrapper = ({ children }) => {

@@ -57,7 +57,7 @@ form {
   
   /* Style for "Next" button (different color from submit) */
   button[type="button"] {
-    background-color: #28a745;
+    background-color: #ff0066;
   }
   
   /* Change "Next" button color on hover */

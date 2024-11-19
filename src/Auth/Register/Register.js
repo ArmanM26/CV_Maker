@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { auth } from "../../Firebase/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import "../Auth.css";
 
 function Register() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -19,17 +22,31 @@ function Register() {
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password); // Регистрация пользователя
-      navigate("/"); // Перенаправление на страницу логина после регистрации
+      await createUserWithEmailAndPassword(auth, email, password);
+      navigate("/"); // Redirect to login after successful registration
     } catch (error) {
-      setError(error.message); // Отображение ошибки
+      setError(error.message);
     }
   };
 
   return (
-    <div>
+    <div className="auth-container">
       <h1>Register</h1>
       <form onSubmit={handleRegister}>
+        <input
+          type="text"
+          placeholder="First Name"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Last Name"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          required
+        />
         <input
           type="email"
           placeholder="Email"
@@ -53,11 +70,13 @@ function Register() {
         />
         <button type="submit">Register</button>
       </form>
-      {error && <p>{error}</p>}
-      <p>
-        Already have an account?{" "}
-        <button onClick={() => navigate("/")}>Login here</button>
-      </p>
+      {error && <p className="error-message">{error}</p>}
+      <div className="switch-link">
+        <p>
+          Already have an account?{" "}
+          <a onClick={() => navigate("/")}>Login here</a>
+        </p>
+      </div>
     </div>
   );
 }
