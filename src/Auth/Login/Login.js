@@ -43,8 +43,8 @@ function Login() {
       {error && <p className="error-message">{error}</p>}
       <div className="switch-link">
         <p>
-          Don't have an account?{" "}
-          <a onClick={() => navigate("/register")}>Register here</a>
+          Don't have an account? <a href="/register">Register here</a>{" "}
+          {/* Add href here */}
         </p>
       </div>
     </div>
