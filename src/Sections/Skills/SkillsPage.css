@@ -48,7 +48,7 @@ form {
   }
   
   /* Style for "Add Skill" button */
-  button[type="button"] {
+  button  [type="button"] {
     background-color: #0056b3;
   }
   

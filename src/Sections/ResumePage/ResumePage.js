@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { db } from "../../Firebase/firebase"; // Import the Firebase Firestore instance
-import { collection, getDocs } from "firebase/firestore"; // Firestore functions
-import { useNavigate } from "react-router-dom"; // If you want to navigate for editing profile
-import "./ResumePage.css"; // Import your CSS file for styling
+import { db } from "../../Firebase/firebase";
+import { collection, getDocs } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import "./ResumePage.css";
 
 function ResumePage() {
   const [resumeData, setResumeData] = useState({
